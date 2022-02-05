@@ -1,7 +1,7 @@
 {
-  "name": "erc721-soulbond",
+  "name": "erc721-soulbind",
   "version": "0.0.1",
-  "description": "erc721-soulbond",
+  "description": "erc721-soulbind",
   "scripts": {
     "build": "yarn compile && npx tsc",
     "compile": "npx hardhat compile --force",

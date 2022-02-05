@@ -8,7 +8,7 @@ The only addition to IERC721 interface is a reclaim method:
 
 `function reclaim(address claimant, uint256 tokenId) external;`
 
-There is also an added internal method `_soulbond` which should be used in any minting logic of the top level ERC721 contract, to ensure that all minting adheres to the rules of 'soulbonding'
+There is also an added internal method `_soulbind` which should be used in any minting logic of the top level ERC721 contract, to ensure that all minting adheres to the rules of 'soulbinding'
 
 # test
 
