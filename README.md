@@ -13,5 +13,7 @@ There is also an added internal method `_soulbond` which should be used in any m
 # test
 
 yarn
+
 yarn compile
+
 yarn test
