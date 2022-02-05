@@ -1,0 +1,59 @@
+{
+  "name": "erc721-soulbond",
+  "version": "0.0.1",
+  "description": "erc721-soulbond",
+  "scripts": {
+    "build": "yarn compile && npx tsc",
+    "compile": "npx hardhat compile --force",
+    "deploy": "npx hardhat deploy",
+    "format": "prettier --write '*/**/*.*{js,sol,json,md,ts}'",
+    "format:check": "prettier --check '*/**/*.*{js,sol,json,md,ts}'",
+    "lint": "eslint --cache . && yarn lint:sol",
+    "lint:ts": "eslint -c .eslintrc.json --ext \"**/*.ts\" \"**/*.test.ts\"",
+    "lint:sol": "solhint 'contracts/**/*.sol'",
+    "postinstall": "yarn husky install",
+    "test": "npx hardhat test",
+    "verify": "npx hardhat etherscan-verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gelatodigital/hello-world.git"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers",
+    "@nomiclabs/hardhat-waffle": "2.0.1",
+    "@openzeppelin/contracts": "4.3.1",
+    "@tsconfig/recommended": "1.0.1",
+    "@typechain/ethers-v5": "7.0.1",
+    "@typechain/hardhat": "2.3.0",
+    "@types/chai": "4.2.21",
+    "@types/mocha": "9.0.0",
+    "@types/node": "16.7.10",
+    "@typescript-eslint/eslint-plugin": "4.30.0",
+    "@typescript-eslint/parser": "4.30.0",
+    "chai": "4.3.4",
+    "dotenv": "10.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "ethereum-waffle": "3.4.0",
+    "ethers": "5.4.6",
+    "hardhat": "2.6.2",
+    "hardhat-deploy": "0.9.1",
+    "husky": "7.0.2",
+    "lint-staged": "11.1.2",
+    "prettier": "2.3.2",
+    "prettier-plugin-solidity": "1.0.0-beta.17",
+    "solhint": "3.3.6",
+    "solhint-plugin-prettier": "0.0.5",
+    "ts-generator": "0.1.1",
+    "ts-node": "10.2.1",
+    "typechain": "5.1.2",
+    "typescript": "4.4.2"
+  },
+  "lint-staged": {
+    "*.*{js,sol,json,md,ts,yml,yaml}": "prettier --write",
+    "*.*{ts,js}": "eslint -c .eslintrc.json"
+  }
+}
