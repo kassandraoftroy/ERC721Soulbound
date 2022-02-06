@@ -8,7 +8,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
     hre.network.name === "goerli"
   ) {
     console.log(
-      `!! Deploying SoulboundENS to ${hre.network.name}. Hit ctrl + c to abort`
+      `!! Deploying Spellbound to ${hre.network.name}. Hit ctrl + c to abort`
     );
     await new Promise((r) => setTimeout(r, 20000));
   }
@@ -16,7 +16,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment) => {
   const { deploy } = deployments;
   const { deployer } = await getNamedAccounts();
 
-  await deploy("SoulboundENS", {
+  await deploy("Spellbound", {
     from: deployer,
     args: [],
   });
@@ -29,6 +29,6 @@ func.skip = async (hre: HardhatRuntimeEnvironment) => {
   return shouldSkip ? true : false;
 };
 
-func.tags = ["SoulboundENS"];
+func.tags = ["Spellbound"];
 
 export default func;

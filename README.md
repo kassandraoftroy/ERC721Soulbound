@@ -1,16 +1,34 @@
 # ERC721Soulbound
 
-Here is a simple ERC721 extension for nfts that want to forever be tied to a base nft collection. For example, maybe you want to give an NFT/rights to a specific crypto punk, in such a way that the owner of said crypto punk will always be able to assert/take ownership of the asset.
+Here is a simple ERC721 extension for nfts that want to forever be tied to a base nft collection. For example, maybe you want to give non-fungible rights or some auxiliary NFT (e.g. an in-game item) to a specific CryptoPunk or ENS domain, in such a way that the owner of said CryptoPunk or ENS name will always be able to assert/take ownership of the asset.
 
-Thus, soulbound. [Inspired by Vitalik's article](https://vitalik.ca/general/2022/01/26/soulbound.html)
+Thus, soulbound. [Inspired by Vitalik's blogpost](https://vitalik.ca/general/2022/01/26/soulbound.html)
 
-The only addition to IERC721 interface is a reclaim method:
+The IERC721Soulbound interface extends IERC721 with a few new methods:
 
-`function reclaim(address claimant, uint256 tokenId) external;`
+```
+    function soul() external view returns (address);
 
-There is also an added internal method `_soulbind` which should be used in any minting logic of the top level ERC721 contract, to ensure that all minting adheres to the rules of 'soulbinding'
+    function boundTo(uint256 tokenId) external view returns (uint256);
+ 
+    function soulOwner(uint256 tokenId) external view returns (address);
 
-# test
+    function reclaim(address claimant, uint256 tokenId) external;
+
+    function canReclaim(address claimant, uint256 tokenId) external view returns (bool);
+```
+
+`soul()` Address of the 'soul' ERC721 collection.
+
+`boundTo(uint256 tokenId)` The tokenId of the soul collection that this token is bound to.
+
+`soulOwner(uint256 tokenId)` The rightful owner of the token which may differ from `ownerOf(tokenId)`. The soulOwner can reclaim the token if they are not currently the holder.
+
+`reclaim(address claimant, uint256 tokenId)` Reclaim tokenId to the soulOwner.
+
+`canReclaim(address claimant, uint256 tokenId)` Check if an address can reclaim a token.
+
+## test
 
 yarn
 

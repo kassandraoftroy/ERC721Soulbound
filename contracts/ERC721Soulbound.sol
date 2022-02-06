@@ -3,45 +3,63 @@ pragma solidity 0.8.7;
 
 import {
     IERC721,
-    ERC721,
-    ERC721Enumerable
-} from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+    ERC721
+} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import {IERC721Soulbound} from "./IERC721Soulbound.sol";
 
-abstract contract ERC721Soulbound is ERC721Enumerable, IERC721Soulbound {
-
-    IERC721 public immutable base;
-    // tokenId => baseTokenId (a baseTokenId could bind with many tokenIds)
-    mapping(uint256 => uint256) public bind;
+abstract contract ERC721Soulbound is ERC721, IERC721Soulbound {
+    // base ERC721 contract whose ids bind to this collection
+    IERC721 private immutable _soul;
+    // tokenId => soulId (a soulId MAY bind with many tokenIds)
+    mapping(uint256 => uint256) private _boundTo;
 
     constructor(
-        address base_,
+        address soul_,
         string memory name_,
         string memory symbol_
     ) ERC721(name_, symbol_) {
-        base = IERC721(base_);
+        _soul = IERC721(soul_);
     }
 
     function reclaim(address claimant, uint256 tokenId) public virtual override {
-        uint256 baseTokenId = bind[tokenId];
-        require(
-            base.ownerOf(baseTokenId) == claimant,
-            "ERC721Soulbound: claimant not owner of baseTokenId"
-        );
-
+        require(canReclaim(claimant, tokenId), "ERC721Soulbound: claimant cannot reclaim");
+        emit Reclaim(tokenId, _boundTo[tokenId], claimant);
+        
         _safeTransfer(ownerOf(tokenId), claimant, tokenId, "");
     }
 
+    function soul() public virtual override view returns (address) {
+        return address(_soul);
+    }
+
+    function soulOwner(uint256 tokenId) public virtual override view returns (address) {
+        return _soul.ownerOf(_boundTo[tokenId]);
+    }
+
+    function boundTo(uint256 tokenId) public virtual override view returns (uint256) {
+        return _boundTo[tokenId];
+    }
+
+    function canReclaim(
+        address claimant,
+        uint256 tokenId
+    ) public virtual override view returns (bool) {
+        address soulOwner_ = soulOwner(tokenId);
+        return (soulOwner_ != ownerOf(tokenId)) && (soulOwner_ == claimant);
+    }
+
     function _soulbind(
-        uint256 baseTokenId,
+        uint256 soulId,
         address claimant,
         uint256 tokenId
     ) internal virtual {
         require(
-            base.ownerOf(baseTokenId) == claimant,
-            "ERC721Soulbound: claimant not owner of baseTokenId"
+            _soul.ownerOf(soulId) == claimant,
+            "ERC721Soulbound: claimant not owner of soulId"
         );
-        bind[tokenId] = baseTokenId;
+        emit Soulbind(tokenId, soulId, claimant);
+        _boundTo[tokenId] = soulId;
+
         _safeMint(claimant, tokenId);
     }
     
