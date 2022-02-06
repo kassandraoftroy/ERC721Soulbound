@@ -29,9 +29,22 @@ The IERC721Soulbound interface extends IERC721 with a few new methods:
 `canReclaim(address claimant, uint256 tokenId)` Check if an address can reclaim a token.
 
 ## test
+Set up .env file by copying the example and adding your alchemy key:
+```
+$ cp .env.example .env
+```
 
+Install dependencies:
+```
 yarn
+```
 
+Compile:
+```
 yarn compile
+```
 
+Test:
+```
 yarn test
+```
