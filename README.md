@@ -1,5 +1,7 @@
 # ERC721Soulbound
 
+NOTE: This repo is a bit of a misnomer as the "soulbound" concept was less defined (or at least less well understood by me) when this repo was created. Instead of binding tokens to an address forever, this repo is an example of binding ERC721s to an already existing ERC721 on the network. If you are looking for SBTs as they are understood today (attestation/credentials that are non-trnasferrable but can potentially be revoked) then you are NOT in the right place.
+
 Here is a simple ERC721 extension for nfts that want to forever be tied to a base nft collection. For example, maybe you want to give non-fungible rights or some auxiliary NFT (e.g. an in-game item) to a specific CryptoPunk or ENS domain, in such a way that the owner of said CryptoPunk or ENS name will always be able to assert/take ownership of the asset.
 
 Thus, soulbound. [Inspired by Vitalik's blogpost](https://vitalik.ca/general/2022/01/26/soulbound.html)
